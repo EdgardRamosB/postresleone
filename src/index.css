@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Patrick+Hand&family=Playfair+Display:wght@500;600;700;800;900&display=swap");
+
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #fffaf6;
+  color: #451326;
+  font-family: "DM Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================================================
+   TIPOGRAFÍA MANUSCRITA
+   ========================================================= */
+
+.handwriting {
+  font-family: "Patrick Hand", cursive;
+}
+
+.handwriting-title {
+  font-family: "Patrick Hand", cursive;
+}
+
+/* =========================================================
+   SELECCIÓN
+   ========================================================= */
+
+::selection {
+  background: #f7a5bf;
+  color: #451326;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff4f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ef9ab3;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e76f91;
+}
