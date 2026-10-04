@@ -1,44 +1,102 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Product = {
   name: string;
-  price: number;
+  price?: number;
+  slicePrice?: number;
   image: string;
   tag?: string;
+  presentation?: string;
 };
 
 const products: Product[] = [
   {
     name: "Pie de manzana",
     price: 35,
+    slicePrice: 15,
     image: "/productos/pie-manzana.png",
     tag: "♡ Favorito",
+    presentation: "Molde · 8 porciones",
   },
   {
     name: "Tartaleta de maracuyá",
     price: 50,
+    slicePrice: 17,
     image: "/productos/tartaleta-maracuya.png",
+    presentation: "Molde",
   },
   {
     name: "Cheesecake de maracuyá",
     price: 65,
+    slicePrice: 19,
     image: "/productos/cheesecake-maracuya.png",
+    presentation: "Molde",
   },
   {
     name: "Tartaleta de fresa",
     price: 50,
+    slicePrice: 17,
     image: "/productos/tartaleta-fresa.png",
+    presentation: "Molde",
   },
   {
     name: "Cheesecake de fresa",
     price: 65,
+    slicePrice: 19,
     image: "/productos/cheesecake-fresa.png",
     tag: "♡ Cuki approved",
+    presentation: "Molde",
+  },
+  {
+    name: "Alfajores de maicena",
+    image: "/productos/alfajores-de-maicena.png",
+    tag: "♡ Para compartir",
+    presentation: "½ docena S/10 · docena S/20",
+  },
+  {
+    name: "Crema volteada",
+    image: "/productos/crema-volteada.png",
+    presentation: "Postre casero",
+  },
+  {
+    name: "Keke",
+    price: 130,
+    slicePrice: 3,
+    image: "/productos/keke-sabores-variados.png",
+    presentation: "Molde · sabores variados",
+  },
+  {
+    name: "Pie de piña",
+    price: 40,
+    slicePrice: 5.5,
+    image: "/productos/pie-de-piña.png",
+    presentation: "Molde",
+  },
+  {
+    name: "Cheesecake de Oreo",
+    price: 60,
+    slicePrice: 8,
+    image: "/productos/cheesecake-oreo.png",
+    presentation: "Molde",
+  },
+  {
+    name: "Tartaleta de maracumango",
+    price: 55,
+    slicePrice: 7.5,
+    image: "/productos/tartaleta-maracumango.png",
+    presentation: "Molde",
+  },
+  {
+    name: "Enrollados de hot dog",
+    price: 4,
+    image: "/productos/enrrollado.png",
+    presentation: "Cada uno",
   },
 ];
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeProduct, setActiveProduct] = useState<Product | null>(null);
 
   const goTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({
@@ -47,6 +105,30 @@ function App() {
 
     setMenuOpen(false);
   };
+
+  /*
+  ============================================================
+  CERRAR VISOR CON ESC + BLOQUEAR SCROLL
+  ============================================================
+  */
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveProduct(null);
+      }
+    };
+
+    if (activeProduct) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeProduct]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#fffaf6] text-[#451326]">
@@ -200,362 +282,321 @@ function App() {
 
       <main id="inicio">
 
-{/* =========================================================
-    HERO
-========================================================= */}
-
-    <section
-      className="
-        relative
-        h-[760px]
-        overflow-hidden
-        bg-transparent
-        sm:h-[790px]
-        md:h-[610px]
-      "
-      style={{
-        backgroundImage: "url('/fondos/fondo-tapiz.png')",
-        backgroundSize: "100% 730px",
-        backgroundPosition: "center -120px",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-
-      {/* CAPA SUAVE */}
-
-      <div className="pointer-events-none absolute inset-0 bg-[#fffaf6]/5" />
-
-
-      {/* =========================================================
-          CONTENEDOR PRINCIPAL
-      ========================================================= */}
-
-      <div className="relative mx-auto h-full max-w-[1250px] px-4 sm:px-5 md:px-8">
-
-
-        {/* =======================================================
-            COLUMNA IZQUIERDA
-        ======================================================= */}
-
-        <div
+        <section
           className="
             relative
-            z-[90]
-            pt-[25px]
-            sm:pt-[30px]
-            md:absolute
-            md:left-0
-            md:top-0
-            md:w-[44%]
-            md:pt-[38px]
+            h-[760px]
+            overflow-hidden
+            bg-transparent
+            sm:h-[790px]
+            md:h-[610px]
           "
+          style={{
+            backgroundImage: "url('/fondos/fondo-tapiz.png')",
+            backgroundSize: "100% 730px",
+            backgroundPosition: "center -120px",
+            backgroundRepeat: "no-repeat",
+          }}
         >
 
-          <h1
-            className="
-              handwriting-title
-              max-w-[570px]
-              text-[43px]
-              font-black
-              leading-[0.88]
-              tracking-[-1px]
-              text-[#421326]
-              sm:text-[52px]
-              md:text-[65px]
-            "
-          >
-            Porque la vida
-
-            <span className="block">
-              es más dulce
-            </span>
-
-            <span className="block">
-              con un{" "}
-              <span className="text-[#ed2e80]">
-                postre
-              </span>
-            </span>
-          </h1>
+          <div className="pointer-events-none absolute inset-0 bg-[#fffaf6]/5" />
 
 
-          <div className="handwriting mt-0 text-[43px] leading-none text-[#411426] sm:text-[48px] md:text-[52px]">
-            ♡
+          <div className="relative mx-auto h-full max-w-[1250px] px-4 sm:px-5 md:px-8">
+
+
+            {/* =======================================================
+                COLUMNA IZQUIERDA
+            ======================================================= */}
+
+            <div
+              className="
+                relative
+                z-[90]
+                pt-[25px]
+                sm:pt-[30px]
+                md:absolute
+                md:left-0
+                md:top-0
+                md:w-[44%]
+                md:pt-[38px]
+              "
+            >
+
+              <h1
+                className="
+                  handwriting-title
+                  max-w-[570px]
+                  text-[43px]
+                  font-black
+                  leading-[0.88]
+                  tracking-[-1px]
+                  text-[#421326]
+                  sm:text-[52px]
+                  md:text-[65px]
+                "
+              >
+                Porque la vida
+
+                <span className="block">
+                  es más dulce
+                </span>
+
+                <span className="block">
+                  con un{" "}
+                  <span className="text-[#ed2e80]">
+                    postre
+                  </span>
+                </span>
+              </h1>
+
+
+              <div className="handwriting mt-0 text-[43px] leading-none text-[#411426] sm:text-[48px] md:text-[52px]">
+                ♡
+              </div>
+
+
+              <p className="handwriting mt-3 max-w-[330px] text-[16px] font-bold leading-[1.1] text-[#351820] sm:text-[18px] md:mt-4 md:max-w-[370px] md:text-[19px]">
+                Kekes, tortas y postres caseros
+                <br />
+                hechos con mucho amor
+                <br />
+                (y un toque de locura)
+              </p>
+
+
+              <button
+                onClick={() => goTo("menu")}
+                className="
+                  handwriting
+                  mt-4
+                  rounded-full
+                  bg-[#f42f82]
+                  px-6
+                  py-3
+                  text-[16px]
+                  font-bold
+                  text-white
+                  shadow-[0_8px_18px_rgba(242,47,130,0.25)]
+                  transition
+                  hover:-translate-y-1
+                  hover:bg-[#e62a78]
+                  sm:mt-5
+                  sm:px-7
+                  sm:py-3.5
+                  sm:text-[17px]
+                "
+              >
+                🛒 Haz tu pedido →
+              </button>
+
+
+              <div className="handwriting mt-3 flex items-center gap-2 text-[15px] font-bold text-[#351820] sm:mt-5 sm:text-[17px]">
+                <span className="text-[21px] sm:text-[24px]">
+                  📍
+                </span>
+
+                Lima, Perú
+              </div>
+
+
+              <div className="absolute -left-1 top-[220px] rotate-[-12deg] text-[24px] sm:top-[275px] sm:text-[28px]">
+                ♡
+              </div>
+
+
+              <div className="absolute right-[5%] top-[8px] rotate-[-12deg] text-[22px] md:left-[45%] md:right-auto md:top-[20px] md:text-[25px]">
+                ✦
+              </div>
+
+            </div>
+
+
+            {/* =======================================================
+                COLUMNA DERECHA
+            ======================================================= */}
+
+            <div
+              className="
+                absolute
+                inset-x-0
+                bottom-0
+                top-[275px]
+                sm:top-[285px]
+                md:relative
+                md:ml-[44%]
+                md:h-full
+                md:w-[56%]
+                md:inset-auto
+              "
+            >
+
+              <div
+                className="
+                  handwriting
+                  absolute
+                  right-[5%]
+                  top-[-70px]
+                  z-[70]
+                  rotate-[-5deg]
+                  text-right
+                  text-[22px]
+                  font-bold
+                  leading-[0.9]
+                  text-[#641a37]
+                  sm:right-[6%]
+                  sm:top-[-60px]
+                  sm:text-[25px]
+                  md:left-[2%]
+                  md:right-auto
+                  md:top-[35px]
+                  md:text-left
+                  md:text-[30px]
+                "
+              >
+                ♡ Postres
+                <br />
+                que enamoran ♡
+              </div>
+
+
+              <img
+                src="/hero/duena.png"
+                alt="Creadora de Dulce y Cuki"
+                className="
+                  absolute
+                  bottom-[100px]
+                  right-[-2%]
+                  z-20
+                  h-[360px]
+                  w-auto
+                  object-contain
+                  drop-shadow-[0_12px_16px_rgba(65,20,30,0.12)]
+                  sm:bottom-[105px]
+                  sm:right-[-1%]
+                  sm:h-[405px]
+                  md:right-[-19%]
+                  md:top-[-5px]
+                  md:bottom-auto
+                  md:h-[530px]
+                "
+              />
+
+
+              <img
+                src="/hero/cheesecake-hero.png"
+                alt="Cheesecake de fresa"
+                className="
+                  absolute
+                  bottom-[13px]
+                  left-1/2
+                  z-30
+                  w-[285px]
+                  -translate-x-1/2
+                  rotate-[-2deg]
+                  object-contain
+                  drop-shadow-[0_14px_17px_rgba(70,25,25,0.22)]
+                  sm:bottom-[12px]
+                  sm:w-[345px]
+                  md:bottom-[27px]
+                  md:left-[4%]
+                  md:w-[430px]
+                  md:max-w-[76%]
+                  md:translate-x-0
+                "
+              />
+
+
+              <img
+                src="/hero/cuki.png"
+                alt="Cuki"
+                className="
+                  absolute
+                  bottom-[3px]
+                  left-[-7%]
+                  z-50
+                  w-[205px]
+                  rotate-[-4deg]
+                  object-contain
+                  drop-shadow-[0_8px_12px_rgba(40,15,20,0.22)]
+                  sm:left-[-2%]
+                  sm:w-[245px]
+                  md:bottom-[-5px]
+                  md:left-[-30%]
+                  md:w-[390px]
+                "
+              />
+
+
+              <div
+                className="
+                  handwriting
+                  absolute
+                  right-[2%]
+                  top-[105px]
+                  z-[80]
+                  rotate-[-7deg]
+                  bg-[#ffe8ad]
+                  px-3
+                  py-2.5
+                  text-[13px]
+                  font-bold
+                  leading-[1.35]
+                  text-[#29151b]
+                  shadow-[2px_5px_10px_rgba(50,20,20,0.15)]
+                  sm:right-[4%]
+                  sm:top-[120px]
+                  sm:px-4
+                  sm:py-3
+                  sm:text-[15px]
+                  md:right-[-6%]
+                  md:top-[240px]
+                  md:px-5
+                  md:py-4
+                  md:text-[17px]
+                  md:leading-[1.45]
+                "
+              >
+                ✓ Abogada
+                <br />
+                ✓ Gym
+                <br />
+                ✓ Postres
+                <br />
+                ✓ Yo ♡
+              </div>
+
+
+              <div className="handwriting absolute left-[42%] top-[65px] z-[80] rotate-[10deg] text-[24px] sm:top-[80px] sm:text-[28px] md:left-[30%] md:top-[125px] md:text-[31px]">
+                ♡
+              </div>
+
+              <div className="handwriting absolute right-[9%] bottom-[55px] z-[80] rotate-[10deg] text-[25px] sm:text-[28px] md:right-[8%] md:bottom-[72px] md:text-[31px]">
+                ♡
+              </div>
+
+              <div className="absolute left-[46%] bottom-[115px] z-[80] rotate-[-8deg] text-[20px] sm:text-[23px] md:left-[34%] md:bottom-[145px] md:text-[25px]">
+                ✦
+              </div>
+
+              <div className="handwriting absolute right-[25%] top-[115px] z-[80] text-[19px] sm:text-[21px] md:right-[22%] md:top-[180px] md:text-[23px]">
+                ♡
+              </div>
+
+            </div>
+
+
+            <div className="absolute bottom-[8px] left-[5%] rotate-[-10deg] text-[24px] sm:text-[28px]">
+              ♡
+            </div>
+
+            <div className="absolute bottom-[12px] right-[6%] rotate-[12deg] text-[22px] sm:text-[25px]">
+              ✦
+            </div>
+
           </div>
 
-
-          <p className="handwriting mt-3 max-w-[330px] text-[16px] font-bold leading-[1.1] text-[#351820] sm:text-[18px] md:mt-4 md:max-w-[370px] md:text-[19px]">
-            Kekes, tortas y postres caseros
-            <br />
-            hechos con mucho amor
-            <br />
-            (y un toque de locura)
-          </p>
-
-
-          <button
-            onClick={() => goTo("menu")}
-            className="
-              handwriting
-              mt-4
-              rounded-full
-              bg-[#f42f82]
-              px-6
-              py-3
-              text-[16px]
-              font-bold
-              text-white
-              shadow-[0_8px_18px_rgba(242,47,130,0.25)]
-              transition
-              hover:-translate-y-1
-              hover:bg-[#e62a78]
-              sm:mt-5
-              sm:px-7
-              sm:py-3.5
-              sm:text-[17px]
-            "
-          >
-            🛒 Haz tu pedido →
-          </button>
-
-
-          <div className="handwriting mt-3 flex items-center gap-2 text-[15px] font-bold text-[#351820] sm:mt-5 sm:text-[17px]">
-            <span className="text-[21px] sm:text-[24px]">
-              📍
-            </span>
-
-            Lima, Perú
-          </div>
-
-
-          <div className="absolute -left-1 top-[220px] rotate-[-12deg] text-[24px] sm:top-[275px] sm:text-[28px]">
-            ♡
-          </div>
-
-
-          <div className="absolute right-[5%] top-[8px] rotate-[-12deg] text-[22px] md:left-[45%] md:right-auto md:top-[20px] md:text-[25px]">
-            ✦
-          </div>
-
-        </div>
-
-
-        {/* =======================================================
-            COLUMNA DERECHA
-            IMPORTANTE:
-            En desktop volvemos a tener la misma columna que tu
-            diseño original. Así las imágenes no se mueven.
-        ======================================================= */}
-
-        <div
-          className="
-            absolute
-            inset-x-0
-            bottom-0
-            top-[275px]
-            sm:top-[285px]
-            md:relative
-            md:ml-[44%]
-            md:h-full
-            md:w-[56%]
-            md:inset-auto
-          "
-        >
-
-          {/* =====================================================
-              FRASE
-          ===================================================== */}
-
-          <div
-            className="
-              handwriting
-              absolute
-              right-[5%]
-              top-[-70px]
-              z-[70]
-              rotate-[-5deg]
-              text-right
-              text-[22px]
-              font-bold
-              leading-[0.9]
-              text-[#641a37]
-              sm:right-[6%]
-              sm:top-[-60px]
-              sm:text-[25px]
-              md:left-[2%]
-              md:right-auto
-              md:top-[35px]
-              md:text-left
-              md:text-[30px]
-            "
-          >
-            ♡ Postres
-            <br />
-            que enamoran ♡
-          </div>
-
-
-          {/* =====================================================
-              DUEÑA
-          ===================================================== */}
-
-          <img
-            src="/hero/duena.png"
-            alt="Creadora de Dulce y Cuki"
-            className="
-              absolute
-              bottom-[100px]
-              right-[-2%]
-              z-20
-              h-[360px]
-              w-auto
-              object-contain
-              drop-shadow-[0_12px_16px_rgba(65,20,30,0.12)]
-              sm:bottom-[105px]
-              sm:right-[-1%]
-              sm:h-[405px]
-              md:right-[-19%]
-              md:top-[-5px]
-              md:bottom-auto
-              md:h-[530px]
-            "
-          />
-
-
-          {/* =====================================================
-              CHEESECAKE
-          ===================================================== */}
-
-          <img
-            src="/hero/cheesecake-hero.png"
-            alt="Cheesecake de fresa"
-            className="
-              absolute
-              bottom-[13px]
-              left-1/2
-              z-30
-              w-[285px]
-              -translate-x-1/2
-              rotate-[-2deg]
-              object-contain
-              drop-shadow-[0_14px_17px_rgba(70,25,25,0.22)]
-              sm:bottom-[12px]
-              sm:w-[345px]
-              md:bottom-[27px]
-              md:left-[4%]
-              md:w-[430px]
-              md:max-w-[76%]
-              md:translate-x-0
-            "
-          />
-
-
-          {/* =====================================================
-              CUKI
-          ===================================================== */}
-
-          <img
-            src="/hero/cuki.png"
-            alt="Cuki"
-            className="
-              absolute
-              bottom-[3px]
-              left-[-7%]
-              z-50
-              w-[205px]
-              rotate-[-4deg]
-              object-contain
-              drop-shadow-[0_8px_12px_rgba(40,15,20,0.22)]
-              sm:left-[-2%]
-              sm:w-[245px]
-              md:bottom-[-5px]
-              md:left-[-30%]
-              md:w-[390px]
-            "
-          />
-
-
-          {/* =====================================================
-              POST-IT
-          ===================================================== */}
-
-          <div
-            className="
-              handwriting
-              absolute
-              right-[2%]
-              top-[105px]
-              z-[80]
-              rotate-[-7deg]
-              bg-[#ffe8ad]
-              px-3
-              py-2.5
-              text-[13px]
-              font-bold
-              leading-[1.35]
-              text-[#29151b]
-              shadow-[2px_5px_10px_rgba(50,20,20,0.15)]
-              sm:right-[4%]
-              sm:top-[120px]
-              sm:px-4
-              sm:py-3
-              sm:text-[15px]
-              md:right-[-6%]
-              md:top-[240px]
-              md:px-5
-              md:py-4
-              md:text-[17px]
-              md:leading-[1.45]
-            "
-          >
-            ✓ Abogada
-            <br />
-            ✓ Gym
-            <br />
-            ✓ Postres
-            <br />
-            ✓ Yo ♡
-          </div>
-
-
-          {/* =====================================================
-              DOODLES
-          ===================================================== */}
-
-          <div className="handwriting absolute left-[42%] top-[65px] z-[80] rotate-[10deg] text-[24px] sm:top-[80px] sm:text-[28px] md:left-[30%] md:top-[125px] md:text-[31px]">
-            ♡
-          </div>
-
-          <div className="handwriting absolute right-[9%] bottom-[55px] z-[80] rotate-[10deg] text-[25px] sm:text-[28px] md:right-[8%] md:bottom-[72px] md:text-[31px]">
-            ♡
-          </div>
-
-          <div className="absolute left-[46%] bottom-[115px] z-[80] rotate-[-8deg] text-[20px] sm:text-[23px] md:left-[34%] md:bottom-[145px] md:text-[25px]">
-            ✦
-          </div>
-
-          <div className="handwriting absolute right-[25%] top-[115px] z-[80] text-[19px] sm:text-[21px] md:right-[22%] md:top-[180px] md:text-[23px]">
-            ♡
-          </div>
-
-        </div>
-
-
-        {/* =========================================================
-            DECORACIONES DE BORDE
-        ========================================================= */}
-
-        <div className="absolute bottom-[8px] left-[5%] rotate-[-10deg] text-[24px] sm:text-[28px]">
-          ♡
-        </div>
-
-        <div className="absolute bottom-[12px] right-[6%] rotate-[12deg] text-[22px] sm:text-[25px]">
-          ✦
-        </div>
-
-      </div>
-
-    </section>
+        </section>
 
 
         {/* =========================================================
@@ -566,8 +607,6 @@ function App() {
           id="menu"
           className="relative bg-[#fffaf7] px-4 pb-20 pt-8 sm:px-5 sm:pb-24 md:px-8"
         >
-
-          {/* DECORACIONES */}
 
           <div className="absolute left-[5%] top-[25px] rotate-[-15deg] text-2xl text-[#f06c9b] sm:left-[8%] sm:text-3xl">
             ♡
@@ -580,18 +619,22 @@ function App() {
 
           <div className="relative mx-auto max-w-[1180px]">
 
-            {/* TÍTULO */}
-
             <div className="mb-7 text-center sm:mb-8">
 
               <h2 className="handwriting-title text-[40px] font-black leading-none text-[#5b1830] sm:text-[48px] md:text-[58px]">
                 ♡ Nuestro Menú ♡
               </h2>
 
+              <p className="handwriting mt-3 text-[15px] font-bold text-[#916673] sm:text-[17px]">
+                Pasa el mouse o toca un postre para verlo más de cerca ♡
+              </p>
+
             </div>
 
 
-            {/* PRODUCTOS */}
+            {/* =====================================================
+                PRODUCTOS
+            ===================================================== */}
 
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
 
@@ -607,10 +650,11 @@ function App() {
                     border-[#f2cbd6]
                     bg-[#fffaf8]
                     p-2
-                    transition
+                    transition-all
                     duration-300
                     hover:-translate-y-2
-                    hover:shadow-lg
+                    hover:border-[#ee82a6]
+                    hover:shadow-[0_16px_35px_rgba(91,24,48,0.15)]
                     sm:rounded-[20px]
                     sm:p-2.5
                   "
@@ -619,26 +663,102 @@ function App() {
                   {/* TAG */}
 
                   {product.tag && (
-                    <div className="handwriting absolute left-2 top-2 z-10 rounded-full bg-white px-2 py-1 text-[8px] font-bold text-[#d52f6d] shadow-sm sm:left-3 sm:top-3 sm:px-2.5 sm:py-1 sm:text-[10px]">
+                    <div className="handwriting absolute left-2 top-2 z-30 rounded-full bg-white px-2 py-1 text-[8px] font-bold text-[#d52f6d] shadow-sm sm:left-3 sm:top-3 sm:px-2.5 sm:py-1 sm:text-[10px]">
                       {product.tag}
                     </div>
                   )}
 
 
-                  {/* IMAGEN */}
+                  {/* =================================================
+                      IMAGEN
+                  ================================================= */}
 
-                  <div className="h-[125px] overflow-hidden rounded-[12px] bg-[#fff0f2] sm:h-[150px] md:h-[165px] md:rounded-[14px]">
+                  <button
+                    type="button"
+                    onClick={() => setActiveProduct(product)}
+                    className="
+                      relative
+                      block
+                      h-[125px]
+                      w-full
+                      overflow-hidden
+                      rounded-[12px]
+                      bg-[#fff0f2]
+                      text-left
+                      focus:outline-none
+                      focus:ring-2
+                      focus:ring-[#ed3480]
+                      sm:h-[150px]
+                      md:h-[165px]
+                      md:rounded-[14px]
+                    "
+                    aria-label={`Ver ${product.name}`}
+                  >
 
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      className="
+                        h-full
+                        w-full
+                        object-cover
+                        transition
+                        duration-700
+                        ease-out
+                        group-hover:scale-110
+                      "
                     />
 
-                  </div>
+
+                    {/* OVERLAY */}
+
+                    <div
+                      className="
+                        absolute
+                        inset-0
+                        flex
+                        items-center
+                        justify-center
+                        bg-[#ed3480]/0
+                        transition-all
+                        duration-300
+                        group-hover:bg-[#ed3480]/35
+                      "
+                    >
+
+                      <span
+                        className="
+                          handwriting
+                          translate-y-3
+                          rounded-full
+                          bg-white/95
+                          px-3
+                          py-1.5
+                          text-[11px]
+                          font-black
+                          text-[#d52f6d]
+                          opacity-0
+                          shadow-lg
+                          transition-all
+                          duration-300
+                          group-hover:translate-y-0
+                          group-hover:opacity-100
+                          sm:px-4
+                          sm:py-2
+                          sm:text-[13px]
+                        "
+                      >
+                        🔍 Ver postre
+                      </span>
+
+                    </div>
+
+                  </button>
 
 
-                  {/* TEXTO */}
+                  {/* =================================================
+                      TEXTO
+                  ================================================= */}
 
                   <div className="px-0.5 pb-1.5 pt-2 text-center sm:px-1 sm:pb-2 sm:pt-3">
 
@@ -646,8 +766,30 @@ function App() {
                       {product.name}
                     </h3>
 
-                    <div className="handwriting mt-1 text-[18px] font-black text-[#ed3480] sm:text-[20px]">
-                      S/{product.price}
+
+                    {product.presentation && (
+                      <p className="handwriting mt-1 text-[10px] font-bold leading-tight text-[#8b6671] sm:text-[12px]">
+                        {product.presentation}
+                      </p>
+                    )}
+
+
+                    <div className="mt-1.5 flex flex-wrap items-center justify-center gap-1">
+
+                      {product.price !== undefined && (
+                        <span className="handwriting rounded-full bg-[#fff0f4] px-2 py-1 text-[11px] font-black text-[#ed3480] sm:px-2.5 sm:text-[13px]">
+                          {product.name === "Enrollados de hot dog"
+                            ? `S/${product.price} c/u`
+                            : `Molde S/${product.price}`}
+                        </span>
+                      )}
+
+                      {product.slicePrice !== undefined && (
+                        <span className="handwriting rounded-full bg-[#5b1830] px-2 py-1 text-[10px] font-bold text-white sm:px-2.5 sm:text-[12px]">
+                          Tajada S/{product.slicePrice}
+                        </span>
+                      )}
+
                     </div>
 
                   </div>
@@ -836,6 +978,266 @@ function App() {
         </p>
 
       </footer>
+
+
+      {/* =========================================================
+          VISOR GRANDE DEL POSTRE
+      ========================================================= */}
+
+      {activeProduct && (
+
+        <div
+          className="
+            fixed
+            inset-0
+            z-[300]
+            flex
+            items-center
+            justify-center
+            bg-[#35121f]/75
+            p-4
+            backdrop-blur-sm
+            sm:p-6
+          "
+          onClick={() => setActiveProduct(null)}
+        >
+
+          {/* CONTENEDOR */}
+
+          <div
+            className="
+              relative
+              flex
+              max-h-[94vh]
+              w-full
+              max-w-[900px]
+              flex-col
+              overflow-hidden
+              rounded-[28px]
+              border-4
+              border-white
+              bg-[#fffaf8]
+              shadow-[0_30px_90px_rgba(0,0,0,0.35)]
+              animate-[modalIn_.25s_ease-out]
+              md:flex-row
+            "
+            onClick={(event) => event.stopPropagation()}
+          >
+
+            {/* BOTÓN CERRAR */}
+
+            <button
+              type="button"
+              onClick={() => setActiveProduct(null)}
+              className="
+                absolute
+                right-3
+                top-3
+                z-50
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                bg-white
+                text-xl
+                font-bold
+                text-[#5b1830]
+                shadow-lg
+                transition
+                hover:scale-110
+                hover:bg-[#fde0e8]
+              "
+              aria-label="Cerrar"
+            >
+              ✕
+            </button>
+
+
+            {/* FOTO GRANDE */}
+
+            <div
+              className="
+                relative
+                flex
+                min-h-[300px]
+                items-center
+                justify-center
+                bg-[#fff0f2]
+                md:min-h-[500px]
+                md:w-[62%]
+              "
+            >
+
+              <img
+                src={activeProduct.image}
+                alt={activeProduct.name}
+                className="
+                  max-h-[55vh]
+                  w-full
+                  object-contain
+                  p-4
+                  transition
+                  duration-500
+                  sm:max-h-[65vh]
+                  sm:p-7
+                  md:max-h-[600px]
+                  md:p-8
+                "
+              />
+
+              <div className="pointer-events-none absolute bottom-4 left-4 rotate-[-7deg] text-3xl text-[#ed3480] sm:bottom-6 sm:left-6 sm:text-4xl">
+                ♡
+              </div>
+
+              <div className="pointer-events-none absolute right-6 top-5 rotate-[10deg] text-2xl text-[#ed3480] sm:right-8 sm:top-7 sm:text-3xl">
+                ✦
+              </div>
+
+            </div>
+
+
+            {/* INFORMACIÓN */}
+
+            <div
+              className="
+                flex
+                flex-1
+                flex-col
+                justify-center
+                px-6
+                py-7
+                text-center
+                md:px-8
+                md:text-left
+              "
+            >
+
+              <div className="handwriting text-[15px] font-bold text-[#ed3480] sm:text-[17px]">
+                ♡ hecho con amor
+              </div>
+
+
+              <h3
+                className="
+                  handwriting-title
+                  mt-2
+                  text-[34px]
+                  font-black
+                  leading-[0.95]
+                  text-[#5b1830]
+                  sm:text-[42px]
+                "
+              >
+                {activeProduct.name}
+              </h3>
+
+
+              {activeProduct.presentation && (
+                <p className="handwriting mt-3 text-[15px] font-bold leading-6 text-[#805b66] sm:text-[17px]">
+                  {activeProduct.presentation}
+                </p>
+              )}
+
+
+              <div className="mt-5 flex flex-wrap justify-center gap-2 md:justify-start">
+
+                {activeProduct.price !== undefined && (
+                  <div className="rounded-[18px] bg-[#fff0f4] px-4 py-3">
+
+                    <div className="handwriting text-[11px] font-bold text-[#9b6b79]">
+                      MOLDE
+                    </div>
+
+                    <div className="handwriting-title text-[28px] font-black leading-none text-[#ed3480]">
+                      S/{activeProduct.price}
+                    </div>
+
+                  </div>
+                )}
+
+
+                {activeProduct.slicePrice !== undefined && (
+                  <div className="rounded-[18px] bg-[#5b1830] px-4 py-3">
+
+                    <div className="handwriting text-[11px] font-bold text-[#f8dce3]">
+                      POR TAJADA
+                    </div>
+
+                    <div className="handwriting-title text-[28px] font-black leading-none text-white">
+                      S/{activeProduct.slicePrice}
+                    </div>
+
+                  </div>
+                )}
+
+              </div>
+
+
+              {activeProduct.name === "Alfajores de maicena" && (
+                <div className="mt-4 rounded-[18px] bg-[#fff0f4] px-4 py-3">
+
+                  <div className="handwriting text-[14px] font-bold text-[#5b1830]">
+                    ½ docena · S/10
+                  </div>
+
+                  <div className="handwriting text-[14px] font-bold text-[#ed3480]">
+                    Docena · S/20
+                  </div>
+
+                </div>
+              )}
+
+
+              {activeProduct.name === "Crema volteada" && (
+                <div className="mt-4 rounded-[18px] bg-[#fff0f4] px-4 py-3">
+
+                  <div className="handwriting text-[14px] font-bold text-[#5b1830]">
+                    Escríbenos para consultar
+                  </div>
+
+                </div>
+              )}
+
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveProduct(null);
+                  goTo("pedidos");
+                }}
+                className="
+                  handwriting
+                  mt-6
+                  rounded-full
+                  bg-[#f42f82]
+                  px-6
+                  py-3
+                  text-[16px]
+                  font-bold
+                  text-white
+                  shadow-[0_8px_18px_rgba(242,47,130,0.25)]
+                  transition
+                  hover:-translate-y-1
+                  hover:bg-[#e62a78]
+                "
+              >
+                Quiero este postre ♡
+              </button>
+
+
+              <div className="handwriting mt-4 text-[12px] font-bold text-[#a17884]">
+                Toca fuera de la ventana para cerrar
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
 
     </div>
   );
