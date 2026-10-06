@@ -2296,7 +2296,7 @@ const openWhatsApp = (productName: string) => {
 
 
 
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      className="h-full w-full object-contain transition duration-500 group-hover:scale-105"
 
 
 
